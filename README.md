@@ -1,2 +1,4 @@
 # crypto_bot
-reddit bot with cryptocurrency tools
+Bot that has useful tools for cryptocurrencies.
+
+Requires <a href="https://praw.readthedocs.org">PRAW</a>.
