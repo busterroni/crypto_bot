@@ -10,7 +10,7 @@ password=""
 useragent=""
 
 #time to sleep in seconds after a network error:
-time_to_sleep=0
+time_to_sleep=
 
 #don't include the /r/ (e.g. just subreddit_to_post="example")
 subreddit_to_post=""
