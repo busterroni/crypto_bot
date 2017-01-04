@@ -49,7 +49,7 @@ def main(useragent, username, password):
 		else:
 			print e
 		sys.exit()
-	print "Success! View at http://reddit.com/" + post.id
+	print "Success! View at https://reddit.com/" + post.id
 
 def createTitleSkeleton(currTime):
 	title="Bitcoin Network Status Update " + currTime.strftime('%A, %B %d, %Y')
@@ -116,7 +116,7 @@ def getData():
 
 	description+="***" + nl
 
-	description+="^^I ^^am ^^a ^^bot. **[^^My ^^commands](http://www.reddit.com/r/Bitcoin/comments/3an2c4/ive_been_working_on_a_bot_for_crypto_subs_like/)** ^^| ^^*/r/crypto_bot* ^^| [^^Message ^^my ^^creator](http://www.reddit.com/message/compose?to=busterroni) ^^| [^^Source ^^code](https://github.com/busterroni/crypto_bot)"
+	description+="^^I ^^am ^^a ^^bot. **[^^My ^^commands](https://www.reddit.com/r/Bitcoin/comments/3an2c4/ive_been_working_on_a_bot_for_crypto_subs_like/)** ^^| ^^*/r/crypto_bot* ^^| [^^Message ^^my ^^creator](https://www.reddit.com/message/compose?to=busterroni) ^^| [^^Source ^^code](https://github.com/busterroni/crypto_bot)"
 
 	return description
 
