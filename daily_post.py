@@ -12,7 +12,6 @@ useragent=""
 #time to sleep in seconds after a network error:
 time_to_sleep=60
 
-#don't include the /r/ (e.g. just subreddit_to_post="example")
 subreddit_to_post=""
 ########################
 ###### end config ######
@@ -22,8 +21,11 @@ nl="\n\n"
 
 def main(useragent, username, password):
 	#login:
-	r=praw.Reddit(useragent)
-	login(username, password, r)
+	r = praw.Reddit(client_id='',
+			client_secret='',
+			username=username,
+			password=password,
+			user_agent=useragent)
 
 	#get current time:
 	currTime=datetime.datetime.now()
@@ -38,8 +40,8 @@ def main(useragent, username, password):
 	#attempt to submit post
 	print "Attempting to submit post to /r/" + subreddit_to_post
 	try:
-		post=r.submit(subreddit_to_post, title=title, text=description)
-	except praw.errors.APIException as e:
+		post=r.subreddit(subreddit_to_post).submit(title=title, selftext=description)
+	except praw.exceptions.APIException as e:
 		if "SUBREDDIT_NOTALLOWED" in str(e):
 			print "You do not have permission to post in /r/" + subreddit_to_post + ", exiting..."
 		elif "SUBREDDIT_NOEXIST" in str(e):
@@ -48,21 +50,6 @@ def main(useragent, username, password):
 			print e
 		sys.exit()
 	print "Success! View at http://reddit.com/" + post.id
-
-def login(username, password, r):
-	#attempt to login
-	connected=False
-	while not connected:
-		try:
-			r.login(username, password)
-			connected=True
-			print "Logged in as " + username + "!"
-		except requests.exceptions.ConnectionError:
-			print "Could not log in, sleeping for " + str(time_to_sleep) + " seconds..."
-			time.sleep(time_to_sleep)
-		except praw.errors.InvalidUserPass:
-			print "Error: Incorrect username or password."
-			sys.exit()
 
 def createTitleSkeleton(currTime):
 	title="Bitcoin Network Status Update " + currTime.strftime('%A, %B %d, %Y')
@@ -98,18 +85,18 @@ def getData():
 	priceUSD=float(prices[7]['rate'])
 
 	#adding commas to data
-	block_count=str("{:,}".format(block_count))
-	totalBtc=str("{:,}".format(totalBtc))
-	difficulty=str("{:,}".format(difficulty))
+	block_count=str("{:,d}".format(block_count))
+	totalBtc=str("{:,f}".format(totalBtc))
+	difficulty=str("{:,f}".format(difficulty))
 
-	blocks_day=str("{:,}".format(blocks_day))
-	outputs_day=str("{:,}".format(outputs_day))
-	fees_day=str("{:,}".format(fees_day))
-	avg_blocktime_day=str("{:,}".format(avg_blocktime_day))
-	hashrate_day=str("{:,}".format(hashrate_day))
+	blocks_day=str("{:,d}".format(blocks_day))
+	outputs_day=str("{:,f}".format(outputs_day))
+	fees_day=str("{:,f}".format(fees_day))
+	avg_blocktime_day=str("{:,d}".format(avg_blocktime_day))
+	hashrate_day=str("{:,f}".format(hashrate_day))
 
 	#one can only hope this is necessary...
-	priceUSD=str("{:,}".format(priceUSD))
+	priceUSD=str("{:,.2f}".format(priceUSD))
 
 
 	#adding data to description:
@@ -129,7 +116,7 @@ def getData():
 
 	description+="***" + nl
 
-	description+="^^I ^^am ^^a ^^bot. **[^^My ^^commands](http://www.reddit.com/r/Bitcoin/comments/3an2c4/ive_been_working_on_a_bot_for_crypto_subs_like/)** ^^| ^^*/r/crypto_bot* ^^| [^^Message ^^my ^^creator](http://www.reddit.com/message/compose?to=busterroni) ^^| [^^Source](https://github.com/busterroni/crypto_bot)"
+	description+="^^I ^^am ^^a ^^bot. **[^^My ^^commands](http://www.reddit.com/r/Bitcoin/comments/3an2c4/ive_been_working_on_a_bot_for_crypto_subs_like/)** ^^| ^^*/r/crypto_bot* ^^| [^^Message ^^my ^^creator](http://www.reddit.com/message/compose?to=busterroni) ^^| [^^Source ^^code](https://github.com/busterroni/crypto_bot)"
 
 	return description
 
