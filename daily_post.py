@@ -81,8 +81,7 @@ def getData():
 	avg_blocktime_day_secs=str(int(avg_blocktime_day_secs*60))
 	avg_blocktime_day=int(avg_blocktime_day)
 
-	prices=requests.get('https://api.smartbit.com.au/v1/exchange-rates').json()['exchange_rates']
-	priceUSD=float(prices[7]['rate'])
+	price=float(requests.get('https://api.coinbase.com/v2/prices/spot?currency=USD').json()['data']['amount'])
 
 	#adding commas to data
 	block_count=str("{:,d}".format(block_count))
@@ -96,7 +95,7 @@ def getData():
 	hashrate_day=str("{:,f}".format(hashrate_day))
 
 	#one can only hope this is necessary...
-	priceUSD=str("{:,.2f}".format(priceUSD))
+	priceUSD=str("{:,.2f}".format(price))
 
 
 	#adding data to description:
