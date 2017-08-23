@@ -111,7 +111,7 @@ def getData():
 	description+="**Estimated hashrate:** " + hashrate_day + " gh/s" + nl
 	description+="**Current price:** US$" + priceUSD + nl
 
-	description+="*Data provided by [Smartbit.com.au](https://www.smartbit.com.au).*" + nl
+	description+="*Data provided by [Smartbit.com.au](https://www.smartbit.com.au). Price data provided by [Coinbase](https://www.coinbase.com).*" + nl
 
 	description+="***" + nl
 
